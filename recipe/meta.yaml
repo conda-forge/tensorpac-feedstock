@@ -6,22 +6,23 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: a23511f13a38464a428504f890377b8664145b7c094dd5faa0adeb1fddfde248
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: "{{ PYTHON }} -m pip install . -vv"
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pip
+    - setuptools
     - numpy
     - joblib
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - numpy
     - scipy
     - joblib
@@ -37,6 +38,7 @@ test:
     - tensorpac.signals
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
 
